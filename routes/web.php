@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function (){
+
+    Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+    Route::prefix('panel')->middleware(['checkAdmin'])->group(function () {
+
+        Route::get('/', \App\Http\Controllers\Panel\PanelController::class)->name('panel');
+        Route::resource('book', \App\Http\Controllers\Book\BookController::class);
+
+        Route::resource('user',\App\Http\Controllers\User\UserController::class);
+    });
+
+});
 
 Auth::routes();

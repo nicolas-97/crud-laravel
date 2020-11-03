@@ -33,7 +33,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if (optional(auth()->user())->isAdmin())
+                            <li class="nav-item">
+                                <a href="{{ route('panel') }}" class="nav-link">Panel administrativo</a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -73,6 +77,23 @@
         </nav>
 
         <main class="py-4">
+
+            @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+            @endif
+
+            @if (isset($errors) && $errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
             <div class="container">
                 @yield('content')
             </div>
