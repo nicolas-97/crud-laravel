@@ -30,8 +30,8 @@
         </div>
 
         <div class="form-row">
-            <label for="confirm_password">Confirmar Contraseña</label>
-            <input type="password" class="form-control" name="confirm_password" required value="">
+            <label for="password_confirmation">Confirmar Contraseña</label>
+            <input type="password" class="form-control" name="password_confirmation" required value="">
         </div>
 
 

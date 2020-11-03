@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -74,9 +76,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $user->update([
+            'name' => $request->name,
+            'password' => Hash::make($request->password),
+            'isAdmin' => $request->isAdmin,
+            'dni' => $request->dni,
+        ]);
+        return redirect()
+            ->route('user.show',['user' => $user->id])
+            ->withSuccess("El usuario {$user->name} ha sido actualizado");
     }
 
     /**
