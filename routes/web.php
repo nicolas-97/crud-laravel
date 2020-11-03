@@ -16,12 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function (){
 
     Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+    Route::resource('book', \App\Http\Controllers\Book\BookController::class)->only([
+        'show'
+    ]);
 
     Route::prefix('panel')->middleware(['checkAdmin'])->group(function () {
 
         Route::get('/', \App\Http\Controllers\Panel\PanelController::class)->name('panel');
-        Route::resource('book', \App\Http\Controllers\Book\BookController::class);
+        Route::resource('book', \App\Http\Controllers\Book\BookController::class)->except([
+            'show'
+        ]);
 
         Route::resource('user',\App\Http\Controllers\User\UserController::class);
     });
