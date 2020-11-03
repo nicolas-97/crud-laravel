@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Book;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -83,9 +84,12 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $book->update($request->all());
+        return redirect()
+            ->route('book.show',['book' => $book->id])
+            ->withSuccess("El libro {$book->name} fue editado");
     }
 
     /**
